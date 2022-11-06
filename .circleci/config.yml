@@ -42,7 +42,7 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: Change directory to frontend
+          name: Change directory to frontend, install npm modules, and build frontend
           command: |
             # Your code here
             cd frontend
@@ -61,7 +61,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: Change directory to backend
+          name: Change directory to backend, install npm modules, and build backend
           command: |
             cd backend
             npm install
