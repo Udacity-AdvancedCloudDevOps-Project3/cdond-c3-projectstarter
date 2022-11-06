@@ -146,10 +146,10 @@ jobs:
           command: |
             cd backend
             ### to fix backend nalyze audit security test We add next line
-            sudo npm install npm@latest -g
+            npm install
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical --force
+            # npm audit fix --audit-level=critical --force
             # npm audit fix --force
             npm audit --audit-level=critical
       - save_cache:
