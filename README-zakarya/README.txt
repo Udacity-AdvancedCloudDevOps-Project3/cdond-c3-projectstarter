@@ -26,6 +26,8 @@ A public git repository with your project code. [URL01]
     https://github.com/Udacity-AdvancedCloudDevOps-Project3/cdond-c3-projectstarter.git
 
 
+
+
 A.2.
 Evidence of code-based CI/CD configuration in the form of yaml files in your git repository.
 
@@ -33,9 +35,10 @@ Evidence of code-based CI/CD configuration in the form of yaml files in your git
 
     ~/.circleci/config.yml
 
+
+
 A.3.
 Console output of various pre-deploy job failure scenarios:
-
 
 A.3.a
 Build Jobs that failed because of compile errors. [SCREENSHOT01]
@@ -45,6 +48,12 @@ Build Jobs that failed because of compile errors. [SCREENSHOT01]
 
 A.3.b
 Failed unit tests. [SCREENSHOT02]
+
+    Screenshot for failed Unit test of frontend in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT02.a.png
+
+    Screenshot for failed Unit test of backend in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT02.b.png
 
 A.3.c
 Failure because of vulnerable packages. [SCREENSHOT03]
@@ -56,13 +65,17 @@ An alert from one of your failed builds. [SCREENSHOT04]
 
 
 
+
+
 A.4
 Evidence in your code that:
 
 A.4.a
 Compile errors have been fixed.
 
-    >I added a comment in the code of the file
+    I added comments in the code of the file in path of the repository home:
+    ~/backend/src/main.ts
+    In lines 31 & 32
     "
     ...
         //zak-original-not-commented// .addBearerAuth()x // here is an intentional compile error. Remove the "x" and the backend should compile.
@@ -72,6 +85,32 @@ Compile errors have been fixed.
 
 A.4.b
 Unit tests have been fixed.
+
+    To fix frontend unit test
+    I added comments in the code of the file in path of the repository home:
+    ~/frontend/src/app/components/LoadingMessage/LoadingMessage.spec.tsx
+    In lines 11:13
+    "
+    ...
+    // zak-original-line-not-commented
+    // expect(wrapper.contains(<span>{message}?</span>)).toBeTruthy(); //remove the question mark to make the test pass
+    expect(wrapper.contains(<span>{message}</span>)).toBeTruthy(); // Removing the "?" question mark fixed frontend unit test
+    ...
+    "
+
+
+    To fix backend unit test
+    I added comments in the code of the file in path of the repository home:
+    ~/backend/src/modules/domain/employees/commands/handlers/employee-activator.handler.spec.ts
+    Lines 22& 23
+    "
+    ...
+    //zak-original-line-not-commented //employeeId: 101, //change this to 100 to make the test pass
+        employeeId: 100, //change value to 100 fix backedn unit test
+    ...
+    "
+
+
 
 A.4.c
 All critical security vulnerabilities caught by the “Analyze” job have been fixed.
