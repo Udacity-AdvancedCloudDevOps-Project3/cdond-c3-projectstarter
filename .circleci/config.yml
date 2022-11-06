@@ -36,7 +36,7 @@ commands:
 jobs:
   build-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:latest
     steps:
       - checkout
       - restore_cache:
@@ -55,7 +55,7 @@ jobs:
 
   build-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:latest
     steps:
       - checkout
       - restore_cache:
@@ -74,7 +74,7 @@ jobs:
   test-frontend:
     docker:
       # Docker image here
-      - image: circleci/node:13.8.0
+      - image: circleci/node:latest
     steps:
       # Checkout code from git
       - checkout
@@ -91,7 +91,7 @@ jobs:
   test-backend:
     docker:
       # Docker image here
-      - image: circleci/node:13.8.0
+      - image: circleci/node:latest
     steps:
       # Checkout code from git
       - checkout
@@ -108,7 +108,7 @@ jobs:
   scan-frontend:
     docker:
       # Docker image here
-      - image: circleci/node:13.8.0
+      - image: circleci/node:latest
     steps:
       # Checkout code from git
       - checkout
@@ -121,14 +121,14 @@ jobs:
           command: |
             cd frontend
             ### to fix frontend Analyze audit security test We add next line
-            npm audit fix --audit-level=critical --force
-            npm audit fix --force
+            ###npm audit fix --audit-level=critical --force
+            ###npm audit fix --force
             npm audit --audit-level=critical
 
   scan-backend:
     docker:
       # Docker image here
-      - image: circleci/node:13.8.0
+      - image: circleci/node:latest
     steps:
       # Checkout code from git
       - checkout
@@ -141,8 +141,8 @@ jobs:
           command: |
             cd backend
             ### to fix backend nalyze audit security test We add next line
-            #npm audit fix --audit-level=critical --force
-            npm audit fix --force
+            ###npm audit fix --audit-level=critical --force
+            ###npm audit fix --force
             npm audit --audit-level=critical
 
 #   deploy-infrastructure:
