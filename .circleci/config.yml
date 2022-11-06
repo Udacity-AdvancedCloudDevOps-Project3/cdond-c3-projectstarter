@@ -120,6 +120,8 @@ jobs:
           name: Change directory to frontend, and run Analyze audit security test 
           command: |
             cd frontend
+            ### to fix frontend Analyze audit security test We add next line
+            npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
 
   scan-backend:
@@ -137,6 +139,8 @@ jobs:
           name: Change directory to backend, and run Analyze audit security test
           command: |
             cd backend
+            ### to fix backend nalyze audit security test We add next line
+            npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
 
 #   deploy-infrastructure:

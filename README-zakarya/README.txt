@@ -58,6 +58,12 @@ Failed unit tests. [SCREENSHOT02]
 A.3.c
 Failure because of vulnerable packages. [SCREENSHOT03]
 
+    Screenshot for failed Analyze audit security test of frontend in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT03.a.png
+
+    Screenshot for failed Analyze audit security test of backend in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT03.b.png
+
 A.3.d
 An alert from one of your failed builds. [SCREENSHOT04]
 
@@ -115,8 +121,28 @@ Unit tests have been fixed.
 A.4.c
 All critical security vulnerabilities caught by the “Analyze” job have been fixed.
 
+   To fix frontend Analyze audit security test
+    I added comments in the code of the file in path of the repository home:
+    ~/.circleci/config.yml
+    Lines 123 & 124
+    "
+    ...
+    ### to fix frontend Analyze audit security test We add next line
+    npm audit fix --audit-level=critical --force
+    ...
+    "
 
 
+    To fix backend Analyze audit security test
+    I added comments in the code of the file in path of the repository home:
+    ~/.circleci/config.yml
+    Lines 142 & 143
+    "
+    ...
+    ### to fix backend Analyze audit security test We add next line
+    npm audit fix --audit-level=critical --force
+    ...
+    "
 
 
 
