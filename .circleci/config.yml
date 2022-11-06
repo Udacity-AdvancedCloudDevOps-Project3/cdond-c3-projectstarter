@@ -3,8 +3,8 @@ version: 2.1
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-      # Add parameter here   
+    # parameters:
+    #   # Add parameter here   
     steps:
       - run:
           name: Destroy environments
@@ -15,8 +15,8 @@ commands:
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
-    parameters:
-      # Add parameter here     
+    # parameters:
+    #   # Add parameter here     
     steps:
       - run:
           name: Revert migrations
@@ -46,13 +46,7 @@ jobs:
           command: |
             # Your code here
             cd frontend
-      - run:
-          name: Install npm modules
-          command: |
             npm install
-      - run:
-          name: Run npm build for frontend
-          command: |
             npm run build
             # exit 1
       - save_cache:
@@ -69,15 +63,8 @@ jobs:
       - run:
           name: Change directory to backend
           command: |
-            # Your code here
             cd backend
-      - run:
-          name: Install npm modules
-          command: |
             npm install
-      - run:
-          name: Run npm build for backend
-          command: |
             npm run build
             # exit 1
       - save_cache:
