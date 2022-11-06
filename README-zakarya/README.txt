@@ -17,7 +17,12 @@ A.
 Utilize Deployment Strategies to design and build CI/CD pipelines that support Continuous Delivery processes.
 
 
+
+
 A public git repository with your project code. [URL01]
+
+https://github.com/Udacity-AdvancedCloudDevOps-Project3/cdond-c3-projectstarter.git
+
 
 
 Console output of various pre-deploy job failure scenarios:
