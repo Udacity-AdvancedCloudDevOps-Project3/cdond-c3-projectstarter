@@ -37,8 +37,8 @@ commands:
 
   notify_on_failure:
     description: Send SLACK notification on failure
-    docker:
-      - image: cimg/base:stable
+    # docker:
+    #   - image: cimg/base:stable
     steps:
       - slack/notify:
           event: fail
@@ -47,8 +47,8 @@ commands:
 
   notify_on_success:
     description: Send SLACK notification on Success
-    docker:
-      - image: cimg/base:stable
+    # docker:
+    #   - image: cimg/base:stable
     steps:
       - slack/notify:
           event: pass
