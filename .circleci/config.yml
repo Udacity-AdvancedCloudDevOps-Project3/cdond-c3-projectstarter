@@ -35,6 +35,24 @@ commands:
               exit 1
             fi
 
+  notify_on_failure:
+    description: Send SLACK notification on failure
+    steps:
+    - slack/notify:
+        event: fail
+        # channel: cicd-pipeline
+        template: basic_fail_1
+
+  notify_on_success:
+    description: Send SLACK notification on Success
+    # docker:
+    # - image: cimg/base:stable
+    steps:
+    - slack/notify:
+        event: pass
+        # channel: cicd-pipeline
+        template: success_tagged_deployment_1
+
 ######################################################
 jobs:
   build-frontend:
@@ -55,7 +73,9 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-      - slack/status
+      - notify_on_success
+      - notify_on_failure
+
 
   build-backend:
     docker:
