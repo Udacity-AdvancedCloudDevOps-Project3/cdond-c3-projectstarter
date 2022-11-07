@@ -37,12 +37,13 @@ commands:
 
   notify_on_failure:
     description: Send SLACK notification on failure
+    ### docker not allowed 
     # docker:
     #   - image: cimg/base:stable
     steps:
       - slack/notify:
           event: fail
-          channel: udacity-advancedclouddevops-project3
+          # channel: udacity-advancedclouddevops-project3
           template: basic_fail_1
 
   notify_on_success:
@@ -52,8 +53,9 @@ commands:
     steps:
       - slack/notify:
           event: pass
-          channel: udacity-advancedclouddevops-project3
-          template: success_tagged_deployment_1
+          # channel: udacity-advancedclouddevops-project3
+          # template: success_tagged_deployment_1
+          template: success_tagged_deploy_1
 
 ######################################################
 jobs:
