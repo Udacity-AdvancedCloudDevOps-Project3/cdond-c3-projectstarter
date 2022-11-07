@@ -126,11 +126,15 @@ All critical security vulnerabilities caught by the “Analyze” job have been 
    To fix frontend Analyze audit security test
     I added comments in the code of the file in path of the repository home:
     ~/.circleci/config.yml
-    Lines 123 & 124
+    Lines 123 & 128
     "
     ...
     ### to fix frontend Analyze audit security test We add next line
+    sudo npm install npm@latest -g
     npm audit fix --audit-level=critical --force
+    # npm audit fix --audit-level=critical --force
+    # npm audit fix --force
+    npm audit --audit-level=critical
     ...
     "
 
@@ -138,22 +142,30 @@ All critical security vulnerabilities caught by the “Analyze” job have been 
     To fix backend Analyze audit security test
     I added comments in the code of the file in path of the repository home:
     ~/.circleci/config.yml
-    Lines 142 & 143
+    Lines 148 & 154
     "
     ...
-    ### to fix backend Analyze audit security test We add next line
+    ### to fix backend nalyze audit security test We add next line
+    npm install
     npm audit fix --audit-level=critical --force
+    npm audit fix --audit-level=critical --force
+    # npm audit fix --audit-level=critical --force
+    # npm audit fix --force
+    npm audit --audit-level=critical
     ...
     "
-    And
-    I added made changes in the code of the file in path of the repository home:
+
+    Also for backend fix
+    I made changes in the code of the file in path of the repository home:
     ~/backend/package.json
+    
     Lines 47
     FROM
     "class-validator": "^0.9.1",
     TO
     "class-validator": "^0.12.2",
     "
+    
     Also lines 80
     FROM
     "standard-version": "^4.4.0",
