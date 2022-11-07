@@ -43,7 +43,7 @@ commands:
     steps:
       - slack/notify:
           event: fail
-          # channel: udacity-advancedclouddevops-project3
+          channel: udacity-advancedclouddevops-project3
           template: basic_fail_1
 
   notify_on_success:
@@ -53,7 +53,7 @@ commands:
     steps:
       - slack/notify:
           event: pass
-          # channel: udacity-advancedclouddevops-project3
+          channel: udacity-advancedclouddevops-project3
           # template: success_tagged_deployment_1
           template: success_tagged_deploy_1
 
@@ -97,6 +97,8 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - notify_on_success
+      - notify_on_failure
 
   test-frontend:
     docker:
@@ -114,6 +116,8 @@ jobs:
           command: |
             cd frontend
             npm run test
+      - notify_on_success
+      - notify_on_failure
 
   test-backend:
     docker:
@@ -131,6 +135,8 @@ jobs:
           command: |
             cd backend
             npm run test
+      - notify_on_success
+      - notify_on_failure
 
   scan-frontend:
     docker:
@@ -156,6 +162,8 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
+      - notify_on_success
+      - notify_on_failure
 
   scan-backend:
     docker:
@@ -175,15 +183,15 @@ jobs:
             ### to fix backend nalyze audit security test We add next line
             npm install
             npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical --force
+            # npm audit fix --audit-level=critical --force
             # npm audit fix --audit-level=critical --force
             # npm audit fix --force
             npm audit --audit-level=critical
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      # - notify:
-      #     context: slack-context
+      - notify_on_success
+      - notify_on_failure
 
 #   deploy-infrastructure:
 #     docker:
