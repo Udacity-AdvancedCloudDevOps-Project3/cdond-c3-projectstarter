@@ -158,8 +158,8 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      - notify:
-          context: slack-context
+      # - notify:
+      #     context: slack-context
 
 #   deploy-infrastructure:
 #     docker:
@@ -330,6 +330,8 @@ jobs:
 workflows:
   default:
     jobs:
+      - notify:
+          context: slack-context
       - build-frontend
       - build-backend
       - test-frontend:
