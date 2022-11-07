@@ -183,7 +183,7 @@ jobs:
             ### to fix backend nalyze audit security test We add next line
             npm install
             npm audit fix --audit-level=critical --force
-            # npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
             # npm audit fix --audit-level=critical --force
             # npm audit fix --force
             npm audit --audit-level=critical
