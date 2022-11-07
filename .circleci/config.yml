@@ -37,20 +37,22 @@ commands:
 
   notify_on_failure:
     description: Send SLACK notification on failure
+    docker:
+    - image: cimg/base:stable
     steps:
     - slack/notify:
         event: fail
-        # channel: cicd-pipeline
+        channel: udacity-advancedclouddevops-project3
         template: basic_fail_1
 
   notify_on_success:
     description: Send SLACK notification on Success
-    # docker:
-    # - image: cimg/base:stable
+    docker:
+    - image: cimg/base:stable
     steps:
     - slack/notify:
         event: pass
-        # channel: cicd-pipeline
+        channel: udacity-advancedclouddevops-project3
         template: success_tagged_deployment_1
 
 ######################################################
@@ -75,7 +77,6 @@ jobs:
           key: frontend-build
       - notify_on_success
       - notify_on_failure
-
 
   build-backend:
     docker:
