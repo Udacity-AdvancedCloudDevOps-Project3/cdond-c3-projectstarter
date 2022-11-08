@@ -1,3 +1,37 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+????????????????????????????????????????????????????
+
+
+
+
+Change Circleci aws acces credentials for profile 3
+
+double check that pipeline runs using profile 3
+
+Database parameters 
+
+
+
+
+
+We may add hint about what was created manually 
+
+SLACK integration
+AWS programatic user
+Database
+S3
+initial cloudfront stack
+circleci env various
+circleci SSH key
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+??????????????????????????????????????????????????
+
+
+
+
 Section 1: Selling CI/CD to your Team/Organization
 
     File path in the repository home:
@@ -67,6 +101,21 @@ Failure because of vulnerable packages. [SCREENSHOT03]
 A.3.d
 An alert from one of your failed builds. [SCREENSHOT04]
 
+    Screenshot from Salack for failed Analyze audit security test of backend in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT04.a.png
+
+    Screenshot from Salack for successful jobs in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT04.b.png
+
+    Screenshot from Circleci for failed Analyze audit security test of backend in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT04.c.png
+
+    Screenshot from Circleci event "pass" does not sent notification to Slack for failed Analyze audit security test of backend in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT04.d.png
+
+    Screenshot from Circleci event "fail" sent notification to Slack for failed Analyze audit security test of backend in the path of the repository home:
+    ~/README-zakarya/SCREENSHOT04.e.png
+
 
 
 
@@ -126,7 +175,7 @@ All critical security vulnerabilities caught by the “Analyze” job have been 
    To fix frontend Analyze audit security test
     I added comments in the code of the file in path of the repository home:
     ~/.circleci/config.yml
-    Lines 123 & 128
+    Lines 157 & 161
     "
     ...
     ### to fix frontend Analyze audit security test We add next line
@@ -142,7 +191,7 @@ All critical security vulnerabilities caught by the “Analyze” job have been 
     To fix backend Analyze audit security test
     I added comments in the code of the file in path of the repository home:
     ~/.circleci/config.yml
-    Lines 148 & 154
+    Lines 184 & 189
     "
     ...
     ### to fix backend nalyze audit security test We add next line
