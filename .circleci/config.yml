@@ -157,7 +157,8 @@ jobs:
           command: |
             cd frontend
             ### to fix frontend Analyze audit security test We add next line
-            sudo npm install npm@latest -g
+            # sudo npm install npm@latest -g
+            npm install
             npm audit fix --audit-level=critical --force
             # npm audit fix --audit-level=critical --force
             # npm audit fix --force
