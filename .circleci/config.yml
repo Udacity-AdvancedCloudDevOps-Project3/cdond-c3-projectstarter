@@ -15,7 +15,7 @@ commands:
           command: |
             # Your code here
             aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
-            aws cloudformation delete-stack --stack-name udapeople-front-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
             # exit 1
 
   revert-migrations:
@@ -277,7 +277,8 @@ jobs:
           command: |
             # Your code here
             # Install Ansible
-            # apk add --update ansible tar gzip aws-cli
+            ### next line not installing aws command
+            ### apk add --update ansible tar gzip aws-cli
             apk add --no-cache \
             python3 \
             py3-pip \
@@ -285,9 +286,9 @@ jobs:
             tar \
             gzip \
             curl \
+            openssh \
             && pip3 install --upgrade pip \
-            && pip3 install --no-cache-dir \
-            awscli \
+            && pip3 install --no-cache-dir awscli \
             && rm -rf /var/cache/apk/*
             # exit 1
       - run:
