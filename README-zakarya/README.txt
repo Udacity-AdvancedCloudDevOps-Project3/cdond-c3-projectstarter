@@ -16,13 +16,21 @@ Database parameters
 
 We may add hint about what was created manually 
 
+VPC
 SLACK integration
 AWS programatic user
-Database
+RDS Database
 S3
 initial cloudfront stack
 circleci env various
 circleci SSH key
+
+
+
+
+
+reverse the time of SSH connection to 600 sec again
+
 
 
 
