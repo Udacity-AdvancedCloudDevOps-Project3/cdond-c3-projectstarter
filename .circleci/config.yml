@@ -49,7 +49,7 @@ commands:
           template: basic_fail_1
 
   notify_on_success:
-    description: Send SLACK notification on Success
+    description: Send SLACK notification on Success using success_tagged_deploy_1 template
     # docker:
     #   - image: cimg/base:stable
     steps:
@@ -59,6 +59,14 @@ commands:
           ### template does not exist
           # template: success_tagged_deployment_1
           template: success_tagged_deploy_1
+  
+  notify_on_success_2:
+    description: Send SLACK notification on Success using basic_success_1 template
+    steps:
+      - slack/notify:
+          event: pass
+          channel: udacity-advancedclouddevops-project3
+          template: basic_success_1
 
 ######################################################
 jobs:
@@ -239,6 +247,7 @@ jobs:
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
       - notify_on_failure  
+      - notify_on_success_2
 
 #   configure-infrastructure:
 #     docker:

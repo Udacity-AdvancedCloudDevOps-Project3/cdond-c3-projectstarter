@@ -235,6 +235,9 @@ Utilize a configuration management tool to accomplish deployment to cloud-based 
 B.1
 Console output of appropriate failure for infrastructure creation job (using CloudFormation). [SCREENSHOT05]
 
+    Screenshot path in the repository home:
+    ~/README-zakarya/SCREENSHOT05.png
+
 B.2
 Console output of a smoke test job that is failing appropriately. [SCREENSHOT06]
 
