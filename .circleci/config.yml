@@ -237,7 +237,7 @@ jobs:
             # Your code here
             INSTANCEIP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters "Name=tag:Name,Values=backend-${ID}" \
+            --filters Name=tag:Name,Values="backend-${ID}" \
             --output text); echo $INSTANCEIP  >> /root/project/.circleci/ansible/inventory.txt
             ### check file contents
             cat /root/project/.circleci/ansible/inventory.txt
