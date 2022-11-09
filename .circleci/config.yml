@@ -284,12 +284,12 @@ jobs:
             # python3 \
             # py3-pip \
             # openssh-client \
+            # openssh \
             apk add --no-cache \
             ansible \
             tar \
             gzip \
             curl \
-            openssh \
             && pip3 install --upgrade pip \
             && pip3 install --no-cache-dir awscli \
             && rm -rf /var/cache/apk/*
