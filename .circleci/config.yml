@@ -262,6 +262,7 @@ jobs:
     docker:
       # Docker image here that supports Ansible
       - image: python:3.7-alpine3.11
+      # - image: ubuntu
     steps:
       # Checkout code from git
       - checkout
@@ -279,9 +280,11 @@ jobs:
             # Install Ansible
             ### next line not installing aws command
             ### apk add --update ansible tar gzip aws-cli
+            # apt-get update && apt-get install \
+            # python3 \
+            # py3-pip \
+            # openssh-client \
             apk add --no-cache \
-            python3 \
-            py3-pip \
             ansible \
             tar \
             gzip \
