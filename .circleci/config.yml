@@ -277,7 +277,18 @@ jobs:
           command: |
             # Your code here
             # Install Ansible
-            apk add --update ansible tar gzip aws-cli
+            # apk add --update ansible tar gzip aws-cli
+            apk add --no-cache \
+            python3 \
+            py3-pip \
+            ansible \
+            tar \
+            gzip \
+            curl \
+            && pip3 install --upgrade pip \
+            && pip3 install --no-cache-dir \
+            awscli \
+            && rm -rf /var/cache/apk/*
             # exit 1
       - run:
           name: Configure server
