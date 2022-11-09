@@ -277,7 +277,7 @@ jobs:
           command: |
             # Your code here
             # Install Ansible
-            apk add --update ansible tar gzip awscli
+            apk add --update ansible tar gzip aws-cli
             # exit 1
       - run:
           name: Configure server
