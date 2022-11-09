@@ -237,10 +237,17 @@ jobs:
             # Your code here
             INSTANCEIP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters Name=tag:Name,Values="backend-${ID}" \
+            --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text); echo $INSTANCEIP  >> /root/project/.circleci/ansible/inventory.txt
             ### check file contents
+            echo "Instance IP is:"
+            echo $INSTANCEIP
+            echo -e "\n"
+            echo "inventory.txt contents are"
+            echo -e "=========================="
             cat /root/project/.circleci/ansible/inventory.txt
+            echo -e "=========================="
+
             # exit 1
       - persist_to_workspace:
           root: ~/
