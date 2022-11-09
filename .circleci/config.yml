@@ -244,9 +244,9 @@ jobs:
             echo $INSTANCEIP
             echo -e "\n"
             echo "inventory.txt contents are"
-            echo -e "=========================="
+            echo -e "===================================="
             cat /root/project/.circleci/ansible/inventory.txt
-            echo -e "=========================="
+            echo -e "===================================="
 
             # exit 1
       - persist_to_workspace:
