@@ -237,8 +237,10 @@ jobs:
             # Your code here
             INSTANCEIP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters "Name=tag:Name,Values=udapeople-backend-zakarya" \
+            --filters "Name=tag:Name,Values=backend-${ID}" \
             --output text); echo $INSTANCEIP  >> /root/project/.circleci/ansible/inventory.txt
+            ### check file contents
+            cat /root/project/.circleci/ansible/inventory.txt
             # exit 1
       - persist_to_workspace:
           root: ~/
@@ -249,24 +251,24 @@ jobs:
       - notify_on_failure  
       - notify_on_success_2
 
-#   configure-infrastructure:
-#     docker:
-#       # Docker image here that supports Ansible
-#     steps:
-#       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # Your code here
-#             exit 1
-#       - run:
-#           name: Configure server
-#           command: |
-#             # Your code here
-#             exit 1
-#       # Here's where you will add some code to rollback on failure      
+  configure-infrastructure:
+    docker:
+      # Docker image here that supports Ansible
+    steps:
+      # Checkout code from git
+      # Add ssh keys with fingerprint
+      # attach workspace
+      - run:
+          name: Install dependencies
+          command: |
+            # Your code here
+            exit 1
+      - run:
+          name: Configure server
+          command: |
+            # Your code here
+            exit 1
+      # Here's where you will add some code to rollback on failure      
 
 #   run-migrations:
 #     docker:
