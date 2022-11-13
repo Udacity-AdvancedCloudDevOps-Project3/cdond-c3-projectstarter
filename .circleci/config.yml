@@ -550,7 +550,7 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            if curl $(ech $API_URL)/api/status | grep "ok"
+            if curl http://54.158.140.85:3030/api/status | grep "ok"
               then
                 return 0
               else
