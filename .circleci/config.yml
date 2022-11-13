@@ -7,7 +7,10 @@ commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     # parameters:
-    #   # Add parameter here   
+    #   # Add parameter here
+    parameters:
+      workflow_id:
+        type: string   
     steps:
       - run:
           name: Destroy environments
@@ -22,20 +25,25 @@ commands:
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     # parameters:
-    #   # Add parameter here     
+    #   # Add parameter here
+    parameters:
+      workflow_id:
+        type: string  
     steps:
       - run:
           name: Revert migrations
           # Add when this will run
+          when: on_fail
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
-            #  cd ~/project/backend
-            #  npm install
-            #  Add revert code here. You can find this in the Getting Started section.
-              exit 1
+              cd ~/project/backend
+              npm install
+              #  Add revert code here. You can find this in the Getting Started section.
+              npm run migration:revert
+              # exit 1
             fi
 
   notify_on_failure:
@@ -554,14 +562,14 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            API_URL=$(cat ~/project/frontend/.env)
+            BACKEND_URL=$(cat ~/project/frontend/.env | awk -F= {' print $2'})
             ### Check
             echo -e "\n"
             echo "API_URL from workspace is:"
             echo -e "===================================="
             echo $API_URL
             echo -e "===================================="
-            if  curl "$API_URL"/api/status | grep "ok"
+            if  curl "$BACKEND_URL"/api/status | grep "ok"
               then
                 return 0
               else
