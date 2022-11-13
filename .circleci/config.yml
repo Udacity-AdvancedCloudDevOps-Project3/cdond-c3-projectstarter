@@ -480,8 +480,13 @@ jobs:
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
             mv artifact.tar.gz .circleci/ansible/roles/deploy/files/
             cd .circleci/ansible
+            ### Check
+            echo -e "\n"
+            # echo "Check the env var TYPEORM_ENTITIES value:"
             echo "Contents  of the inventory.txt file is -------"
+            echo -e "===================================="
             cat inventory.txt
+            echo -e "===================================="
             ansible-playbook -i inventory.txt deploy-backend.yml
             ### Check
             echo -e "\n"
@@ -497,7 +502,9 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image 
-      - image: node/19-alpine
+      ### container image did not work "node/19-alpine"
+       - image: node:19-alpine
+      # - image: python:3.7-alpine3.16
     steps:
       # Checkout code from git
       - checkout
@@ -596,31 +603,31 @@ jobs:
 workflows:
   default:
     jobs:
-      # - notify:
-      #     context: slack-context
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
+      # ### - notify:
+      # ###     context: slack-context
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [master]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
