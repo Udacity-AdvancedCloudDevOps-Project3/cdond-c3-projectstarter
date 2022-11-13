@@ -1,0 +1,90 @@
+
+### We search for the bock in Ansible documentation
+### like "copy builtin" of "file builtin" and so on
+
+
+---
+# - name: "update apt packages."
+#   become: true
+#   apt:
+#     update_cache: yes
+
+# - name: "upgrade packages"
+#   become: true
+#   apt:
+#     upgrade: yes
+
+# - name: Remove dependencies that are no longer required
+#   become: true
+#   ansible.builtin.apt:
+#     autoremove: yes
+
+# - name: Install python3
+#   become: true
+#   apt:
+#     name:
+#       - python3
+#     state: latest
+
+# - name: Install nodejs
+#   become: true
+#   apt:
+#     name:
+#       - nodejs
+#     state: present
+
+# - name: Install npm
+#   become: true
+#   apt:
+#     name:
+#       - npm
+#     state: present
+
+# - name: Install PM2
+#   npm:
+#     name: pm2
+#     global: yes
+#     state: present
+
+# - name: Create a directory if it does not exist
+#   ansible.builtin.file:
+#     path: $HOME/web
+#     state: directory
+#     mode: '0755'
+
+# - name: Copy index.js page
+#   # become: true
+#   copy:
+#     src: index.js
+#     dest: $HOME/web/index.js
+#     # backup: yes
+
+# - name: start pm2 process
+#   command: 'pm2 start /root/web/index.js -f'
+#   become: true
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: $HOME/web
+    state: directory
+    mode: '0755'
+
+- name: Copy artifact to the instance
+  copy:
+    src: artifact.tar.gz
+    dest: $HOME/web/
+    # backup: yes
+
+- name: This command will change the working directory to $HOME/web/
+  ansible.builtin.shell:
+    # cmd: ls -l | grep log
+    chdir: $HOME/web/
+
+- name: Extract artifact.tar.gz into $HOME/web/
+  ansible.builtin.unarchive:
+    src: artifact.tar.gz
+    dest: ./
+
+- name: start pm2 process
+  command: pm2 start ./index.js -f
+  become: true
