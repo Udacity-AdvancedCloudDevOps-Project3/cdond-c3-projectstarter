@@ -19,7 +19,7 @@ We may add hint about what was created manually
 VPC
 SLACK integration
 AWS programatic user
-RDS Database
+RDS Database and we allwed traffic on port 5432 from anywhere not our local IP
 S3
 initial cloudfront stack
 circleci env various
