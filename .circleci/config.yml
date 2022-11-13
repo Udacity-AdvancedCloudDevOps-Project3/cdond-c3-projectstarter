@@ -239,21 +239,21 @@ jobs:
             INSTANCEIP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --output text); echo $INSTANCEIP  >> /root/project/.circleci/ansible/inventory.txt
+            --output text); echo $INSTANCEIP  >> ~/project/.circleci/ansible/inventory.txt
             ### check file contents
             echo "Instance IP is:"
             echo $INSTANCEIP
             echo -e "\n"
             echo "inventory.txt contents are"
             echo -e "===================================="
-            cat /root/project/.circleci/ansible/inventory.txt
+            cat ~/project/.circleci/ansible/inventory.txt
             echo -e "===================================="
 
             # exit 1
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - ~/project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
       - notify_on_failure
@@ -299,7 +299,7 @@ jobs:
           name: Configure server
           command: |
             # Your code here
-            ansible-playbook .circleci/ansible/configure-server.yml -i /root/project/.circleci/ansible/inventory.txt
+            ansible-playbook .circleci/ansible/configure-server.yml -i ~/project/.circleci/ansible/inventory.txt
             ### If timeout then test connection while instance is running using:
             ### $ ansible web -i inventory.txt -m ping
             ### check user user with the ami 
@@ -424,8 +424,8 @@ jobs:
             --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
-            echo API_URL="http://${BACKEND_IP}:3030" >> /root/project/frontend/.env
-            cat frontend/.env
+            echo API_URL="http://${BACKEND_IP}:3030" >> ~/project/frontend/.env
+            cat ~/project/frontend/.env
 
       - run:
           name: Deploy frontend objects
@@ -439,7 +439,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - /root/project/frontend/.env
+            - ~/project/frontend/.env
       # Here's where you will add some code to rollback on failure
       - destroy-environment
       - notify_on_failure
@@ -536,7 +536,7 @@ jobs:
           name: Get backend url
           command: |
             # your code here
-            ### export API_URL=$(cat /root/project/frontend/.env)
+            ### export API_URL=$(cat ~/project/frontend/.env)
             export BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
@@ -554,7 +554,7 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            API_URL=$(cat frontend/.env)
+            API_URL=$(cat ~/project/frontend/.env)
             ### Check
             echo -e "\n"
             echo "API_URL from workspace is:"
