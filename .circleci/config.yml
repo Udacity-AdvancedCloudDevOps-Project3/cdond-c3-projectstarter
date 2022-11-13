@@ -321,15 +321,15 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: install "aws curl tar gzip" commands on based Debian container
+          name: install commands on based Debian container
           command: |
             sudo apt-get update
             sudo apt-get -y install curl tar gzip
-            sudo apt update
-            sudo apt -y install python3-pip
+            sudo apt -y install python3 python3-pip
             sudo pip3 install --upgrade pip
             sudo pip3 install awscli
             sudo pip3 install awscli --upgrade
+            sudo pip3 install ansible
             sudo apt autoremove
       - run:
           name: install typescript in the container
@@ -370,7 +370,7 @@ jobs:
             echo -e "\n"
             echo "Check the value sent to kvdb.io:"
             echo -e "===================================="
-            curl --insecure  https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_${CIRCLE_WORKFLOW_ID:0:7}
+            curl --insecure  https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_${CIRCLE_WORKFLOW_ID:0:7}; echo
             echo -e "===================================="
             echo -e "\n"
             # exit 1
@@ -386,27 +386,49 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
-      - image: amazon/aws-cli
+      # - image: amazon/aws-cli
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
             # your code here
-            yum install -y tar gzip curl
-            yum install -y 
-            autoremove
+            sudo apt-get update
+            sudo apt-get -y install curl tar gzip
+            sudo apt -y install python3 python3-pip
+            sudo pip3 install --upgrade pip
+            sudo pip3 install awscli
+            sudo pip3 install awscli --upgrade
+            sudo pip3 install ansible --upgrade
+            sudo apt autoremove
       - run:
           name: Get backend url
           command: |
             # your code here
+            # export API_URL="http://${BACKEND_IP}:3030"
+            # echo "${API_URL}"
+            export BACKEND_IP=$(aws ec2 describe-instances \
+            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+            --output text)
             export API_URL="http://${BACKEND_IP}:3030"
-            echo "${API_URL}"
+            echo "API_URL = ${API_URL}"
+            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+            cat frontend/.env
+            
       - run:
           name: Deploy frontend objects
           command: |
             # your code here
+            cd frontend
+            npm install
+            npm run build
+            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # Here's where you will add some code to rollback on failure
       - destroy-environment
       - notify_on_failure
