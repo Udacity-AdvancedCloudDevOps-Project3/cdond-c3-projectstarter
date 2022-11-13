@@ -106,13 +106,15 @@
 #     - TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
 
 - name: start pm2 process
-  become: true
-  command: |
+  # become: true
+  # command: |
+  shell: |
     # pm2 stop default
+    cd /home/ubuntu/web/
     pm2 stop all
     pm2 start npm -- start
-  args:
-    chdir: /home/ubuntu/web/
+  # args:
+  #   chdir: /home/ubuntu/web/
   # environment:
   #   - NODE_ENV: production
   #   - ENVIRONMENT: production
@@ -125,3 +127,8 @@
   #   - TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE')}}"
   #   - TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
   #   - TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
+
+  # - name: "start server"
+  # shell: |
+  #   cd /home/ubuntu/backend
+  #   pm2 start npm -- run "start:dev"

@@ -305,6 +305,12 @@ jobs:
             ### check user user with the ami 
             ### check firewalls
             # exit 1
+            ### Check
+            echo -e "\n"
+            echo "Check the env var TYPEORM_ENTITIES value:"
+            echo -e "===================================="
+            echo $TYPEORM_ENTITIES
+            echo -e "===================================="
       # Here's where you will add some code to rollback on failure
       - destroy-environment
       - notify_on_failure
