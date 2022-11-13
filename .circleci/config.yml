@@ -563,7 +563,7 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            BACKEND_URL=$(cat ~/project/frontend/.env | awk -F= {' print $2'})
+            # BACKEND_URL=$(cat ~/project/frontend/.env | awk -F= {' print $2'})
             ### ??? TEST ??? remove after testing
             export BACKEND_URL="echo API_URL=http://54.158.140.85:3030 | awk -F= {' print $2'}"
             ### Check
