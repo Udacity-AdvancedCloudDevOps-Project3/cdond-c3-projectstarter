@@ -420,7 +420,7 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
-            
+
       - run:
           name: Deploy frontend objects
           command: |
@@ -489,6 +489,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -505,10 +507,23 @@ jobs:
           name: Get backend url
           command: |
             # your code here
+            export API_URL=$(cat frontend/.env)
+            ### Check
+            echo -e "\n"
+            echo API_URL is:
+            echo -e "===================================="
+            echo $API_URL
+            echo -e "===================================="
       - run:
           name: Backend smoke test.
           command: |
             # your code here
+            if curl "${API_URL}/api/status" | grep "ok"
+              then
+                  return 0
+              else
+                  return 1
+            fi
       - run:
           name: Frontend smoke test.
           command: |
