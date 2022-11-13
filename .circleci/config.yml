@@ -324,12 +324,13 @@ jobs:
           name: install "aws curl tar gzip" commands on based Debian container
           command: |
             sudo apt-get update
-            sudo apt-get install curl tar gzip
+            sudo apt-get -y install curl tar gzip
             sudo apt update
             sudo apt -y install python3-pip
             sudo pip3 install --upgrade pip
             sudo pip3 install awscli
             sudo pip3 install awscli --upgrade
+            sudo apt autoremove
       - run:
           name: install typescript in the container
           command: |
@@ -354,8 +355,8 @@ jobs:
               # If you are using memstash.io, generate the token "7933fe63-4687-4fa1-8426-aa25aa1730ec" on the website
               # curl -H "Content-Type: text/plain" -H "token: 7933fe63-4687-4fa1-8426-aa25aa1730ec" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
               # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
-              curl https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
-              # curl --insecure https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
+              # curl https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
+              curl --insecure https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
             fi
             ### Checks
             echo -e "\n"
