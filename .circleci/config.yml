@@ -320,9 +320,18 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
+          name: install aws command on based Debian container
+          command: |
+            sudo apt-get update
+            sudo apt update
+            sudo apt -y install python3-pip
+            sudo pip3 install --upgrade pip
+            sudo pip3 install awscli
+            sudo pip3 install awscli --upgrade
+      - run:
           name: install typescript in the container
           command: |
-            npm install ts-node typescript -g
+            sudo npm install ts-node typescript -g
       - run:
           name: Run migrations
           command: |
