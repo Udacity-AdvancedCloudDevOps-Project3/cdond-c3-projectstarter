@@ -86,5 +86,11 @@
     dest: /home/ubuntu/web/
 
 - name: start pm2 process
-  command: pm2 start /home/ubuntu/web/index.js -f
+  # command: pm2 start /home/ubuntu/web/index.js -f
   # become: true
+  ansible.builtin.shell:
+#     # cmd: ls -l | grep log
+    chdir: /home/ubuntu/web/
+    shell: |
+      pm2 stop default
+      pm2 start npm -- start
