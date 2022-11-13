@@ -87,4 +87,4 @@
 
 - name: start pm2 process
   command: pm2 start /home/ubuntu/web/index.js -f
-  become: true
+  # become: true
