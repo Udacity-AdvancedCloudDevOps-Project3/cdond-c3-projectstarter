@@ -253,7 +253,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - ~/project/.circleci/ansible/inventory.txt
+            - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
       - notify_on_failure
@@ -439,7 +439,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - ~/project/frontend/.env
+            - project/frontend/.env
       # Here's where you will add some code to rollback on failure
       - destroy-environment
       - notify_on_failure
