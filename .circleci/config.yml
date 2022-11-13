@@ -550,14 +550,13 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            CURLCHECK=$(curl "$API_URL/api/status")
             ### Check
             echo -e "\n"
             echo "API_URL is:"
             echo -e "===================================="
             echo $API_URL
             echo -e "===================================="
-            if  echo $CURLCHECK | grep "ok"
+            if  curl "$API_URL"/api/status | grep "ok"
               then
                 return 0
               else
