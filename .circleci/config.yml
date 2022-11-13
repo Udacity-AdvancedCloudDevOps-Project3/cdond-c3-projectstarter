@@ -346,19 +346,25 @@ jobs:
           name: Send migration results to kvdb.io not memstash
           command: |
             # Your code here
-            if grep -q "has been executed successfully" ~/project/backend/migrations_dump.txt
+            if grep -q "success" ~/project/backend/migrations_dump.txt
             then
               # If you are using memstash.io, generate the token "7933fe63-4687-4fa1-8426-aa25aa1730ec" on the website
               # curl -H "Content-Type: text/plain" -H "token: 7933fe63-4687-4fa1-8426-aa25aa1730ec" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
               # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
-              curl https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              curl https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
               ### Check
               echo -e "\n"
-              grep "has been executed successfully" ~/project/backend/migrations_dump.txt
+              echo "The contebts of the file ~/project/backend/migrations_dump.txt are:"
+              echo -e "===================================="
+              cat ~/project/backend/migrations_dump.txt
+              echo -e "===================================="
+              echo -e "\n"
+              echo "Grepping for success in the file ~/project/backend/migrations_dump.txt"
+              grep "success" ~/project/backend/migrations_dump.txt
               echo -e "\n"
               echo "Check the value sent to kvdb.io:"
               echo -e "===================================="
-              curl --insecure  https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_${CIRCLE_WORKFLOW_ID:0:7}
+              curl --insecure  https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7/}
               echo -e "===================================="
               echo -e "\n"
             fi
