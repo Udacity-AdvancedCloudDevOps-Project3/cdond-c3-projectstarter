@@ -106,7 +106,10 @@
 #     - TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
 
 - name: start pm2 process
-  command: pm2 stop default && pm2 start npm -- start
+  command: |
+    # pm2 stop default
+    pm2 stop all
+    pm2 start npm -- start
   args:
     chdir: /home/ubuntu/web/
   environment:

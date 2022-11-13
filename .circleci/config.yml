@@ -510,7 +510,7 @@ jobs:
             export API_URL=$(cat frontend/.env)
             ### Check
             echo -e "\n"
-            echo API_URL is:
+            echo "API_URL is:"
             echo -e "===================================="
             echo $API_URL
             echo -e "===================================="
@@ -520,15 +520,31 @@ jobs:
             # your code here
             if curl "${API_URL}/api/status" | grep "ok"
               then
-                  return 0
+                return 0
               else
-                  return 1
+                return 1
             fi
       - run:
           name: Frontend smoke test.
           command: |
             # your code here
-      # Here's where you will add some code to rollback on failure  
+            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"
+            echo -e "\n"
+            echo "Frontend s3 URL is:"
+            echo -e "===================================="
+            echo ${URL}
+            echo -e "===================================="
+            if curl -s ${URL} | grep "Welcome"
+            then
+            # Change this to 0 after the job fails
+              return 1
+            else
+              return 1
+            fi
+      # Here's where you will add some code to rollback on failure
+      # - destroy-environment
+      - notify_on_failure
+      - notify_on_success_2
 
 #   cloudfront-update:
 #     docker:
