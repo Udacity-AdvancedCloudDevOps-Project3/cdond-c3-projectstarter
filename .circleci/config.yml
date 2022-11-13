@@ -8,9 +8,10 @@ commands:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     # parameters:
     #   # Add parameter here
-    parameters:
-      workflow_id:
-        type: string   
+    # parameters:
+    #   workflow_id:
+    #     type: string
+
     steps:
       - run:
           name: Destroy environments
@@ -26,9 +27,9 @@ commands:
     description: Revert the last migration if successfully run in the current workflow.
     # parameters:
     #   # Add parameter here
-    parameters:
-      workflow_id:
-        type: string  
+    # parameters:
+    #   workflow_id:
+    #     type: string  
     steps:
       - run:
           name: Revert migrations
@@ -639,31 +640,31 @@ workflows:
     jobs:
       # ### - notify:
       # ###     context: slack-context
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [master]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      - smoke-test
+          # requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
