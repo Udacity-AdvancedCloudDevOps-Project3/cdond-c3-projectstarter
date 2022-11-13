@@ -490,7 +490,7 @@ jobs:
             echo $TYPEORM_ENTITIES
             echo -e "===================================="
       # Here's where you will add some code to rollback on failure
-      # - destroy-environment
+      - destroy-environment
       - notify_on_failure
       - notify_on_success_2 
 
@@ -621,8 +621,8 @@ workflows:
           requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
