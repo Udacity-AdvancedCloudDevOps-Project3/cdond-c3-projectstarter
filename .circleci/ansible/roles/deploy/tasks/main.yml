@@ -75,16 +75,16 @@
     dest: /home/ubuntu/web/
     # backup: yes
 
-- name: This command will change the working directory to /home/ubuntu/web/
-  ansible.builtin.shell:
-    # cmd: ls -l | grep log
-    chdir: /home/ubuntu/web/
+# - name: This command will change the working directory to /home/ubuntu/web/
+#   ansible.builtin.shell:
+#     # cmd: ls -l | grep log
+#     chdir: /home/ubuntu/web/
 
 - name: Extract artifact.tar.gz into /home/ubuntu/web/
   ansible.builtin.unarchive:
     src: artifact.tar.gz
-    dest: ./
+    dest: /home/ubuntu/web/
 
 - name: start pm2 process
-  command: pm2 start ./index.js -f
+  command: pm2 start /home/ubuntu/web/index.js -f
   become: true
