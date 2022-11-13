@@ -477,6 +477,12 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
+            ### Check
+            echo -e "\n"
+            echo "Check the env var TYPEORM_ENTITIES value:"
+            echo -e "===================================="
+            echo $TYPEORM_ENTITIES
+            echo -e "===================================="
       # Here's where you will add some code to rollback on failure
       # - destroy-environment
       - notify_on_failure
