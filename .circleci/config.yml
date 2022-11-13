@@ -550,7 +550,14 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            if curl --connect-timeout 5 "$API_URL/api/status" | grep "ok"
+            CURLCHECK=$(curl "$API_URL/api/status")
+            ### Check
+            echo -e "\n"
+            echo "API_URL is:"
+            echo -e "===================================="
+            echo $API_URL
+            echo -e "===================================="
+            if  echo $CURLCHECK | grep "ok"
               then
                 return 0
               else
