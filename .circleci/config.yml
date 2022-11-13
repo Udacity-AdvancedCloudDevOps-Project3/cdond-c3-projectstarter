@@ -436,6 +436,10 @@ jobs:
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - frontend/.env
       # Here's where you will add some code to rollback on failure
       - destroy-environment
       - notify_on_failure
@@ -550,9 +554,10 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
+            API_URL=$(cat frontend/.env)
             ### Check
             echo -e "\n"
-            echo "API_URL is:"
+            echo "API_URL from workspace is:"
             echo -e "===================================="
             echo $API_URL
             echo -e "===================================="
