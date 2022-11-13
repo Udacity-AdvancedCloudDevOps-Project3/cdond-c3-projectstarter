@@ -522,6 +522,7 @@ jobs:
             curl \
             nodejs \
             npm \
+            curl \
             python3 \
             py3-pip \
             && pip3 install --upgrade pip setuptools \
@@ -547,7 +548,7 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            if curl "$API_URL/api/status" | grep "ok"
+            if curl "$API_URL"/api/status | grep "ok"
               then
                 return 0
               else
@@ -562,8 +563,10 @@ jobs:
             echo "Frontend s3 URL is:"
             echo -e "===================================="
             echo ${URL}
+            echo $URL
             echo -e "===================================="
-            if curl -s ${URL} | grep "Welcome"
+            # if curl -s ${URL} | grep "Welcome"
+            if curl -s $URL | grep "Welcome"
             then
             # Change this to 0 after the job fails
               return 1
