@@ -356,7 +356,7 @@ jobs:
               # curl -H "Content-Type: text/plain" -H "token: 7933fe63-4687-4fa1-8426-aa25aa1730ec" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
               # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
               # curl https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
-              curl --insecure https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
+              curl --insecure https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
             ### Checks
             echo -e "\n"
@@ -365,12 +365,12 @@ jobs:
             cat ~/project/backend/migrations_dump.txt
             echo -e "===================================="
             echo -e "\n"
-            echo "Grepping for success in the file ~/project/backend/migrations_dump.txt"
+            echo "Grepping for 'No migrations are pending' in the file ~/project/backend/migrations_dump.txt"
             grep -i "No migrations are pending" ~/project/backend/migrations_dump.txt
             echo -e "\n"
             echo "Check the value sent to kvdb.io:"
             echo -e "===================================="
-            curl --insecure  https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_$\{CIRCLE_WORKFLOW_ID:0:7/}
+            curl --insecure  https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_${CIRCLE_WORKFLOW_ID:0:7}
             echo -e "===================================="
             echo -e "\n"
             # exit 1
@@ -383,26 +383,34 @@ jobs:
       - notify_on_failure
       - notify_on_success_2
 
-#   deploy-frontend:
-#     docker:
-#       # Docker image here that supports AWS CLI
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Get backend url
-#           command: |
-#             # your code here
-#             export API_URL="http://${BACKEND_IP}:3030"
-#             echo "${API_URL}"
-#       - run:
-#           name: Deploy frontend objects
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure      
+  deploy-frontend:
+    docker:
+      # Docker image here that supports AWS CLI
+      - image: amazon/aws-cli
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+            yum install -y tar gzip curl
+            yum install -y 
+            autoremove
+      - run:
+          name: Get backend url
+          command: |
+            # your code here
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "${API_URL}"
+      - run:
+          name: Deploy frontend objects
+          command: |
+            # your code here
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment
+      - notify_on_failure
+      - notify_on_success_2 
                     
 #   deploy-backend:
 #     docker:
