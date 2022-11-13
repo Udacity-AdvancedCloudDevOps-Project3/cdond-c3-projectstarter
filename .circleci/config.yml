@@ -550,8 +550,8 @@ jobs:
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text)
             export API_URL="http://${BACKEND_IP}:3030"
-            ### ??? TEST ??? remove after testing
-            export API_URL="http://54.158.140.85:3030"
+            # ### ??? TEST ??? remove after testing
+            # export API_URL="http://54.158.140.85:3030"
             ### Check
             echo -e "\n"
             echo "API_URL created from aws command is:"
@@ -563,9 +563,9 @@ jobs:
           command: |
             # your code here
             ### export API_URL=$(cat ~/project/frontend/.env)
-            # BACKEND_URL=$(cat ~/project/frontend/.env | awk -F= {' print $2'})
-            ### ??? TEST ??? remove after testing
-            export BACKEND_URL=$(echo API_URL=http://54.208.38.16:3030 | awk -F= {' print $2'})
+            BACKEND_URL=$(cat ~/project/frontend/.env | awk -F= {' print $2'})
+            # ### ??? TEST ??? remove after testing
+            # export BACKEND_URL=$(echo API_URL=http://54.208.38.16:3030 | awk -F= {' print $2'})
             ### Check
             echo -e "\n"
             echo "API_URL from workspace is:"
@@ -647,31 +647,31 @@ workflows:
     jobs:
       # ### - notify:
       # ###     context: slack-context
-      # - build-frontend
-      # - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [master]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
-      # - deploy-backend:
-      #     requires: [run-migrations]
-      - smoke-test
-          # requires: [deploy-backend, deploy-frontend]
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [master]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
