@@ -276,9 +276,13 @@ B.2
 Console output of a smoke test job that is failing appropriately. [SCREENSHOT06]
 
     Screenshot path in the repository home:
-    ~/README-zakarya/SCREENSHOT06
+    ~/README-zakarya/SCREENSHOT06.png
+    
 B.3
 Console output of a successful rollback after a failed smoke test. [SCREENSHOT07]
+
+    Screenshot path in the repository home:
+    ~/README-zakarya/SCREENSHOT07.png
 
 B.4
 Console output of successful promotion of new version to production in CloudFront. [SCREENSHOT08]
