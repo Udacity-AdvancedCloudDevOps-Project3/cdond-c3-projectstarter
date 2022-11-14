@@ -272,6 +272,8 @@ Console output of appropriate failure for infrastructure creation job (using Clo
 B.2
 Console output of a smoke test job that is failing appropriately. [SCREENSHOT06]
 
+    Screenshot path in the repository home:
+    ~/README-zakarya/SCREENSHOT06
 B.3
 Console output of a successful rollback after a failed smoke test. [SCREENSHOT07]
 
