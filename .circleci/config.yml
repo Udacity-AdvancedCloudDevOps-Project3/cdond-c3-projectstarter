@@ -246,7 +246,7 @@ jobs:
       # Checkout code from git
       - checkout
       # - run: yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
-      # - run: yum install -y tar gzip
+      - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
           command: |
