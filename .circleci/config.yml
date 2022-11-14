@@ -641,7 +641,8 @@ jobs:
   cloudfront-update:
     docker:
       # Docker image here that supports AWS CLI
-      - image: amazon/aws-cli
+      # - image: amazon/aws-cli
+      - image: node:19-alpine
     steps:
       # Checkout code from git
       - checkout
@@ -649,7 +650,20 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            yum install -y tar gzip
+            # yum install -y tar gzip
+            apk add --no-cache \
+            ansible \
+            tar \
+            gzip \
+            curl \
+            nodejs \
+            npm \
+            curl \
+            python3 \
+            py3-pip \
+            && pip3 install --upgrade pip setuptools \
+            && pip3 install --no-cache-dir awscli \
+            && rm -rf /var/cache/apk/*
       - run:
           name: Update cloudfront distribution
           command: |
