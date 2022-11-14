@@ -44,9 +44,10 @@ commands:
     description: Revert the last migration if successfully run in the current workflow.
     # parameters:
     #   # Add parameter here
-    # parameters:
-    #   workflow_id:
-    #     type: string  
+    parameters:
+      workflow_id:
+        type: string 
+        default: ${CIRCLE_WORKFLOW_ID:0:7}
     steps:
       - run:
           name: Revert migrations
@@ -59,14 +60,14 @@ commands:
             # SUCCESS=$(curl -H "token: e52b52de-ee26-41a5-86e8-e8dcc3d995a5" --request GET https://api.memstash.io/values/migration_<< parameters.workflow_id >>)
             ### Example: kvdb.io
             # SUCCESS=$(curl --insecure  https://kvdb.io/9GE4jRtKznmVKRfvdBABBe/migration_<< parameters.workflow_id >>)
-            SUCCESS=$(curl --insecure  https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_${CIRCLE_WORKFLOW_ID:0:7})
+            SUCCESS=$(curl --insecure  https://kvdb.io/MhG41XSXetM5VomuRkWZea/migration_<< parameters.workflow_id >>
             ### Logic for reverting the database state
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
               npm install
               #  Add revert code here. You can find this in the Getting Started section.
-              npm run migration:revert
+              npm run migrations:revert
               # exit 1
             fi
 
@@ -286,10 +287,10 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      - run:
-          name: faile the job test destroy-environment command
-          command: | 
-              yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
+      # - run:
+      #     name: faile the job test destroy-environment command
+      #     command: | 
+      #         yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
       - notify_on_failure
@@ -631,7 +632,8 @@ jobs:
               return 1
             fi
       # Here's where you will add some code to rollback on failure
-      # - destroy-environment
+      - destroy-environment
+      - revert-migrations
       - notify_on_failure
       - notify_on_success_2
 
