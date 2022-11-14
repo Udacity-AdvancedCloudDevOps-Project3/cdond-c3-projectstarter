@@ -245,7 +245,6 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      # - run: yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
       - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
@@ -287,6 +286,10 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+      - run:
+          name: faile the job test destroy-environment command
+          command: | 
+              yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
       - notify_on_failure
@@ -300,7 +303,6 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - run: yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
       # Add ssh keys with fingerprint
       - add_ssh_keys:
         # You can get this ID in the section where you registered the SSH Key
