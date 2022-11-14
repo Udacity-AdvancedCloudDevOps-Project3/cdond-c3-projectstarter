@@ -245,7 +245,7 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - run: yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
+      # - run: yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
       # - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
@@ -300,6 +300,7 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - run: yum installllllllllllllll-FAIL-llllllllllllllllllllllll -y tar gzip
       # Add ssh keys with fingerprint
       - add_ssh_keys:
         # You can get this ID in the section where you registered the SSH Key
