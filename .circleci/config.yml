@@ -725,9 +725,10 @@ jobs:
             cat ~/project/OLDBUCKETNAME
             cat ~/project/OldWorkflowID
             cat ~/project/STACKS
+            echo
             export OLDBUCKETNAME=$(cat ~/project/OLDBUCKETNAME)
             export OldWorkflowID=$(cat ~/project/OldWorkflowID)
-            export 'STACKS[@]'=$(cat ~/project/STACKS)
+            export 'STACKS'=$(cat ~/project/STACKS)
             echo Old_bucket_name: "$OLDBUCKETNAME"
             echo OldWorkflowID: "${OldWorkflowID}"
             echo Stacks: "${STACKS[@]}"
