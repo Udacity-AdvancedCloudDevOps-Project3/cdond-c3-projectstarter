@@ -706,7 +706,7 @@ jobs:
             ALLBUCKETNAME=$(for bucket in $(aws s3api list-buckets --query 'Buckets[].Name' --output text); do   team_tag=$(aws s3api get-bucket-tagging --bucket $bucket --query 'TagSet[?Key==`Name`].Value' --output text 2>/dev/null);   if [[ $team_tag =~ ^(udapeople) ]]; then     echo $bucket;   fi; done)
             echo All_bucket_name: $ALLBUCKETNAME
             #export OLDBUCKETNAME=$(echo $ALLBUCKETNAME | grep -iv $OldWorkflowID)
-            for i in $(echo $ALLBUCKETNAME);do if echo $i | grep -i "${CIRCLE_WORKFLOW_ID:0:7}"; then NEWBUCKETNAME=$i;else OLDBUCKETNAME=$i;fi;done
+            for i in $(echo $ALLBUCKETNAME);do if echo $i | grep -i "$OldWorkflowID"; then NEWBUCKETNAME=$i;else OLDBUCKETNAME=$i;fi;done
             export NEWBUCKETNAME=$(echo $NEWBUCKETNAME)
             export OLDBUCKETNAME=$(echo $OLDBUCKETNAME)
             echo New_bucket_name: $NEWBUCKETNAME
