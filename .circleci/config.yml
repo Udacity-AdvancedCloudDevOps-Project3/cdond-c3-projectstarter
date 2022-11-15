@@ -721,17 +721,22 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
+            ###Check Test
+            cat ~/project/OLDBUCKETNAME
+            cat ~/project/OldWorkflowID
+            cat ~/project/STACKS
             export OLDBUCKETNAME=$(cat ~/project/OLDBUCKETNAME)
             export OldWorkflowID=$(cat ~/project/OldWorkflowID)
-            export "STACKS[@]"=$(cat ~/project/STACKS)
+            export 'STACKS[@]'=$(cat ~/project/STACKS)
             echo Old_bucket_name: "$OLDBUCKETNAME"
             echo OldWorkflowID: "${OldWorkflowID}"
-            echo ${STACKS[@]}
+            echo Stacks: "${STACKS[@]}"
             echo
+
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
             ### TEST one line
-            exit 1
+            exit 333
 
               ### your code here
               ### next line will not delete the 1st manually created S3 bucket we created without WorkflowID
