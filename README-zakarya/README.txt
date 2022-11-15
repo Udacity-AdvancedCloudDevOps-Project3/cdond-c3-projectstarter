@@ -60,6 +60,16 @@ installllllllllllllll-FAIL-llllllllllllllllllllllll
 "
 
 
+
+
+All screenshots and URLs needed starting from "5. Promotion Phase" need to eb taken just before submitting the project.
+
+
+
+
+
+
+
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ??????????????????????????????????????????????????
 
@@ -277,7 +287,7 @@ Console output of a smoke test job that is failing appropriately. [SCREENSHOT06]
 
     Screenshot path in the repository home:
     ~/README-zakarya/SCREENSHOT06.png
-    
+
 B.3
 Console output of a successful rollback after a failed smoke test. [SCREENSHOT07]
 
