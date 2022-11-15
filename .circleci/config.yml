@@ -687,6 +687,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: Get old stack workflow id
           command: |
@@ -711,19 +713,30 @@ jobs:
             export OLDBUCKETNAME=$(echo $OLDBUCKETNAME)
             echo New_bucket_name: $NEWBUCKETNAME
             echo Old_bucket_name: $OLDBUCKETNAME
+            ### store values
+            echo $OLDBUCKETNAME > ~/project/OLDBUCKETNAME
+            echo $OldWorkflowID > ~/project/OldWorkflowID
+            echo "${STACKS[@]}" > ~/project/STACKS
       - run:
           name: Remove old stacks and files
           command: |
+            export OLDBUCKETNAME=$(cat ~/project/OLDBUCKETNAME)
+            export OldWorkflowID=$(cat ~/project/OldWorkflowID)
+            export "STACKS[@]"=$(cat ~/project/STACKS)
             echo Old_bucket_name: "$OLDBUCKETNAME"
             echo OldWorkflowID: "${OldWorkflowID}"
-            echo 
+            echo ${STACKS[@]}
+            echo
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
-              # your code here
+            ### TEST one line
+            exit 1
+            
+              ### your code here
               ### next line will not delete the 1st manually created S3 bucket we created without WorkflowID
-              #aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              ##aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
               aws s3 rm s3://$(echo $OLDBUCKETNAME) --recursive
-              #aws s3 rb s3://$OLDBUCKETNAME --force 
+              ##aws s3 rb s3://$OLDBUCKETNAME --force 
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
