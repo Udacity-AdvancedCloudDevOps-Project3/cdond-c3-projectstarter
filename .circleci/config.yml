@@ -706,7 +706,7 @@ jobs:
             echo Stack names: "${STACKS[@]}" 
             ### I added next line to get old bucket name 
             export OLDBUCKETNAME=$(for bucket in $(aws s3api list-buckets --query 'Buckets[].Name' --output text); do   team_tag=$(aws s3api get-bucket-tagging --bucket $bucket --query 'TagSet[?Key==`Name`].Value' --output text 2>/dev/null);   if [[ $team_tag =~ ^(udapeople) ]]; then     echo $bucket;   fi; done)
-            echo $OLDBUCKETNAME
+            echo Old_bucket_name: $OLDBUCKETNAME
       - run:
           name: Remove old stacks and files
           command: |
