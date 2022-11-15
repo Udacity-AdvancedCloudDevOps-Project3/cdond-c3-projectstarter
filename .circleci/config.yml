@@ -646,6 +646,9 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - run: yum install -y tar gzip
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -664,6 +667,14 @@ jobs:
             && pip3 install --upgrade pip setuptools \
             && pip3 install --no-cache-dir awscli \
             && rm -rf /var/cache/apk/*
+      - run:
+          name: Store OldWorkflowID to a persistant file in the workspace
+          command: |
+            export OldWorkflowID=$(aws cloudformation \
+            list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+            --no-paginate --output text)
+            echo OldWorkflowID: "${OldWorkflowID}"
+            echo "${OldWorkflowID}" > echo $OldWorkflowID > ~/project/OldWorkflowID
       - run:
           name: Update cloudfront distribution
           command: |
@@ -696,12 +707,14 @@ jobs:
             # your code here
             # export OldWorkflowID="the id here"
             # export STACKS=[] #put the list of stacks here
-            export OldWorkflowID=$(aws cloudformation \
+            #export OldWorkflowID=$(aws cloudformation \
             list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
             --no-paginate --output text)
-            echo OldWorkflowID: "${OldWorkflowID}"
-            echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-            # Fetch the stack names          
+            export OldWorkflowID=$(cat ~/project/OldWorkflowID)
+            echo
+            echo OldWorkflowID is: "${OldWorkflowID}"
+            echo CIRCLE_WORKFLOW_ID is: "${CIRCLE_WORKFLOW_ID:0:7}"
+            ### Fetch the stack names          
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
             echo Stack names: "${STACKS[@]}" 
@@ -716,7 +729,8 @@ jobs:
             echo Old_bucket_name: $OLDBUCKETNAME
             ### store values
             echo $OLDBUCKETNAME > ~/project/OLDBUCKETNAME
-            echo $OldWorkflowID > ~/project/OldWorkflowID
+            ###Next already stored
+            ###echo $OldWorkflowID > ~/project/OldWorkflowID
             echo "${STACKS[@]}" > ~/project/STACKS
       - run:
           name: Remove old stacks and files
@@ -741,7 +755,7 @@ jobs:
               ### your code here
               ### next line will not delete the 1st manually created S3 bucket we created without WorkflowID
               aws s3 rm "s3://$OLDBUCKETNAME" --recursive
-              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              ###ws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
               aws s3 rb "s3://$OLDBUCKETNAME" --force 
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
