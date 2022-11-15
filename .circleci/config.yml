@@ -704,13 +704,18 @@ jobs:
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
             echo Stack names: "${STACKS[@]}" 
+            ### I added next line to get old bucket name 
+            export OLDBUCKETNAME=$(for bucket in $(aws s3api list-buckets --profile 2 --query 'Buckets[].Name' --output text); do   team_tag=$(aws s3api get-bucket-tagging --profile 2 --bucket $bucket --query 'TagSet[?Key==`Name`].Value' --output text 2>/dev/null);   if [[ $team_tag =~ ^(udapeople) ]]; then     echo $bucket;   fi; done)
+            echo $OLDBUCKETNAME
       - run:
           name: Remove old stacks and files
           command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
               # your code here
-              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              ### next line will not delete the 1st manually created S3 bucket we created without WorkflowID
+              #aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              aws s3 rm "s3://$OLDBUCKETNAME" --recursive
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
@@ -721,32 +726,32 @@ workflows:
     jobs:
       # ### - notify:
       # ###     context: slack-context
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [master]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      # - smoke-test:
+      #     requires: [deploy-backend, deploy-frontend]
+      # - cloudfront-update:
+      #     requires: [smoke-test]
+      - cleanup
+          # requires: [cloudfront-update]
