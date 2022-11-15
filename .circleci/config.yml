@@ -687,6 +687,7 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - run: yum install -y tar gzip
       - attach_workspace:
           at: ~/
       - run:
@@ -731,7 +732,7 @@ jobs:
             then
             ### TEST one line
             exit 1
-            
+
               ### your code here
               ### next line will not delete the 1st manually created S3 bucket we created without WorkflowID
               ##aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
