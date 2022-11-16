@@ -727,7 +727,12 @@ jobs:
             ALLBUCKETNAME=$(for bucket in $(aws s3api list-buckets --query 'Buckets[].Name' --output text); do   team_tag=$(aws s3api get-bucket-tagging --bucket $bucket --query 'TagSet[?Key==`Name`].Value' --output text 2>/dev/null);   if [[ $team_tag =~ ^(udapeople) ]]; then     echo $bucket;   fi; done)
             echo All_bucket_name: $ALLBUCKETNAME
             #export OLDBUCKETNAME=$(echo $ALLBUCKETNAME | grep -iv $OldWorkflowID)
-            for i in $(echo $ALLBUCKETNAME);do if echo $i | grep -v "$OldWorkflowID"; then NEWBUCKETNAME=$i;else OLDBUCKETNAME=$i;fi;done
+            
+            # for i in $(echo $ALLBUCKETNAME);do if echo $i | grep -i "$OldWorkflowID"; then NEWBUCKETNAME=$i;else OLDBUCKETNAME=$i;fi;done
+            buck1=$(echo $ALLBUCKETNAME | awk -F {' print $1 '})
+            buck2=$(echo $ALLBUCKETNAME | awk -F {' print $2 '})
+            if echo $buck1 | grep -i "${CIRCLE_WORKFLOW_ID:0:7}"; then NEWBUCKETNAME=$buck1 && OLDBUCKETNAME=$buck2 ;else NEWBUCKETNAME=$buck2 && OLDBUCKETNAME=$buck1;fi
+
             export NEWBUCKETNAME=$(echo $NEWBUCKETNAME)
             export OLDBUCKETNAME=$(echo $OLDBUCKETNAME)
             echo New_bucket_name: $NEWBUCKETNAME
@@ -759,10 +764,14 @@ jobs:
             #exit 333
               ### your code here
               ### next line will not delete the 1st manually created S3 bucket we created without WorkflowID
+              echo "Dlelet bucket contents"
               aws s3 rm "s3://$OLDBUCKETNAME" --recursive
               ###ws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              echo "Dlelet the bucket"
               aws s3 rb "s3://$OLDBUCKETNAME" --force 
+              echo "Dlelet bucket backend stack"
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+              echo "Dlelet bucket frontend stack"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
 

@@ -1,0 +1,43 @@
+---
+
+### Command
+### $ aws cloudformation deploy --template-file create-prometheus-instance.yml --stack-name ubuntu-prometheus --tags project=udapeople --profile 2
+
+### Delete stack
+### $ aws cloudformation delete-stack --stack-name ubuntu-prometheus --profile 2
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: ND9991 C3 L4 
+Resources:
+  EC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+      # KeyName: AWS_Keypair_ND9991
+      KeyName: key2-zakarya
+      # ImageId: 'ami-09e67e426f25ce0d7' # you may need to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
+      # ImageId: 'ami-09d3b3274b6c5d4aa'
+      ImageId: 'ami-0149b2da6ceec4bb0'
+      InstanceType: t3.micro
+  InstanceSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9090
+          ToPort: 9090
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9100
+          ToPort: 9100
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9093
+          ToPort: 9093
+          CidrIp: 0.0.0.0/0
