@@ -779,6 +779,8 @@ jobs:
               echo "Dlelet Old frontend stack"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
+      - notify_on_failure
+      - notify_on_success_2
 
   Configure-node-exporter:
     docker:
@@ -803,15 +805,17 @@ jobs:
             && pip3 install --upgrade pip setuptools \
             && pip3 install --no-cache-dir awscli \
             && rm -rf /var/cache/apk/*
-            
       - attach_workspace:
           at: ~/
       - run:
           name: Configure Node Exporter On Backedn Instance
           command: |
             cd .circleci/ansible
-            cat cat ~/project/.circleci/ansible/inventory.txt
-            ansible-playbook -i cat ~/project/.circleci/ansible/inventory.txt node-exporter-backend.yml
+            cat ~/project/.circleci/ansible/inventory.txt
+            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt node-exporter-backend.yml
+      - destroy-environment
+      - notify_on_failure
+      - notify_on_success_2
 
 ######################################################
 workflows:
