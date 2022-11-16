@@ -758,22 +758,64 @@ jobs:
             echo Stacks: "${STACKS[@]}"
             echo
 
+            echo "Dlelet bucket contents"
+            aws s3 rm "s3://$OLDBUCKETNAME" --recursive
+            echo "Dlelet Old bucket itself"
+            aws s3 rb "s3://$OLDBUCKETNAME" --force 
+
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
             ### TEST one line
             #exit 333
               ### your code here
               ### next line will not delete the 1st manually created S3 bucket we created without WorkflowID
-              echo "Dlelet bucket contents"
-              aws s3 rm "s3://$OLDBUCKETNAME" --recursive
-              ###ws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-              echo "Dlelet the bucket"
-              aws s3 rb "s3://$OLDBUCKETNAME" --force 
-              echo "Dlelet bucket backend stack"
+              # echo "Dlelet bucket contents"
+              # aws s3 rm "s3://$OLDBUCKETNAME" --recursive
+              # ###ws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              # echo "Dlelet the bucket"
+              # aws s3 rb "s3://$OLDBUCKETNAME" --force 
+              echo "Dlelet Old backend stack"
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-              echo "Dlelet bucket frontend stack"
+              echo "Dlelet Old frontend stack"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
+
+  Configure-node-exporter:
+    docker:
+      - image: python:3.7-alpine3.16
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["11:53:17:01:57:4c:ec:06:6c:e5:27:10:4f:37:ef:ae"] 
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+            ansible \
+            tar \
+            gzip \
+            curl \
+            nodejs \
+            npm \
+            curl \
+            python3 \
+            py3-pip \
+            && pip3 install --upgrade pip setuptools \
+            && pip3 install --no-cache-dir awscli \
+            && rm -rf /var/cache/apk/*
+            && pip3 install --upgrade pip \
+            && pip3 install --no-cache-dir awscli \
+            && rm -rf /var/cache/apk/*
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Configure Node Exporter On Backedn Instance
+          command: |
+            cd .circleci/ansible
+            cat cat ~/project/.circleci/ansible/inventory.txt
+            ansible-playbook -i cat ~/project/.circleci/ansible/inventory.txt node-exporter-backend.yml
+
+
 
 ######################################################
 workflows:
@@ -809,4 +851,6 @@ workflows:
       - cloudfront-update:
           requires: [smoke-test]
       - cleanup:
+          requires: [cloudfront-update]
+      - Configure-node-exporter:
           requires: [cloudfront-update]
