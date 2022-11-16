@@ -303,6 +303,9 @@ Console output of successful cleanup job that removes old S3 bucket and EC2 inst
 B.6
 Evidence that deploy jobs only happen on master branch. [SCREENSHOT10]
 
+    Screenshot path in the repository home:
+    ~/README-zakarya/SCREENSHOT10.png
+
 B.7
 Evidence of deployed and functioning front-end application in an S3 bucket [URL02] and in CloudFront. [URL03]
 
