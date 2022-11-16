@@ -782,7 +782,7 @@ jobs:
 
   Configure-node-exporter:
     docker:
-      - image: python:3.7-alpine3.16
+      - image: node:19-alpine
     steps:
       - checkout
       - add_ssh_keys:
@@ -803,9 +803,7 @@ jobs:
             && pip3 install --upgrade pip setuptools \
             && pip3 install --no-cache-dir awscli \
             && rm -rf /var/cache/apk/*
-            && pip3 install --upgrade pip \
-            && pip3 install --no-cache-dir awscli \
-            && rm -rf /var/cache/apk/*
+            
       - attach_workspace:
           at: ~/
       - run:
@@ -814,8 +812,6 @@ jobs:
             cd .circleci/ansible
             cat cat ~/project/.circleci/ansible/inventory.txt
             ansible-playbook -i cat ~/project/.circleci/ansible/inventory.txt node-exporter-backend.yml
-
-
 
 ######################################################
 workflows:
@@ -853,4 +849,4 @@ workflows:
       - cleanup:
           requires: [cloudfront-update]
       - Configure-node-exporter:
-          requires: [cloudfront-update]
+          requires: [deploy-infrastructure]
