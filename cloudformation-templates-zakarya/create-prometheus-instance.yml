@@ -1,13 +1,15 @@
 ---
 
 ### Command
-### $ aws cloudformation deploy --template-file create-prometheus-instance.yml --stack-name ubuntu-prometheus --tags project=udapeople --profile 2
+
+
+### $ aws cloudformation deploy --template-file create-prometheus-instance.yml --stack-name udapeople-prometheus --tags project=udapeople --profile 2
 
 ### Delete stack
-### $ aws cloudformation delete-stack --stack-name ubuntu-prometheus --profile 2
+### $ aws cloudformation delete-stack --stack-name udapeople-prometheus --profile 2
 
 AWSTemplateFormatVersion: 2010-09-09
-Description: ND9991 C3 L4 
+# Description: ND9991 C3 L4 
 Resources:
   EC2Instance:
     Type: 'AWS::EC2::Instance'
@@ -20,6 +22,9 @@ Resources:
       # ImageId: 'ami-09d3b3274b6c5d4aa'
       ImageId: 'ami-0149b2da6ceec4bb0'
       InstanceType: t3.micro
+      Tags:
+      - Key: Name
+        Value: udapeople-prometheus-Ubuntu
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -41,3 +46,6 @@ Resources:
           FromPort: 9093
           ToPort: 9093
           CidrIp: 0.0.0.0/0
+      Tags:
+      - Key: Name
+        Value: udapeople-prometheus-SecurityGroup
