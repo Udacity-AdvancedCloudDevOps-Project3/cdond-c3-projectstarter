@@ -68,6 +68,8 @@ All screenshots and URLs needed starting from "5. Promotion Phase" need to eb ta
 
 
 
+Run the prometheus Instance 
+
 
 
 

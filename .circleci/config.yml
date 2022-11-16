@@ -731,7 +731,7 @@ jobs:
             # for i in $(echo $ALLBUCKETNAME);do if echo $i | grep -i "$OldWorkflowID"; then NEWBUCKETNAME=$i;else OLDBUCKETNAME=$i;fi;done
             BUCK1=$(echo $ALLBUCKETNAME | awk {' print $1 '})
             BUCK2=$(echo $ALLBUCKETNAME | awk {' print $2 '})
-            if echo $buck1 | grep -i "${CIRCLE_WORKFLOW_ID:0:7}"; then NEWBUCKETNAME=$BUCK1 && OLDBUCKETNAME=$BUCK2 ;else NEWBUCKETNAME=$BUCK2 && OLDBUCKETNAME=$BUCK1;fi
+            if echo $BUCK1 | grep -i "${CIRCLE_WORKFLOW_ID:0:7}"; then NEWBUCKETNAME=$BUCK1 && OLDBUCKETNAME=$BUCK2 ;else NEWBUCKETNAME=$BUCK2 && OLDBUCKETNAME=$BUCK1;fi
 
             export NEWBUCKETNAME=$(echo $NEWBUCKETNAME)
             export OLDBUCKETNAME=$(echo $OLDBUCKETNAME)
