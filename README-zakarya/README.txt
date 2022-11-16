@@ -305,6 +305,7 @@ Evidence that deploy jobs only happen on master branch. [SCREENSHOT10]
 
     Screenshot path in the repository home:
     ~/README-zakarya/SCREENSHOT10.png
+    Branch name "before-deploy"
 
 B.7
 Evidence of deployed and functioning front-end application in an S3 bucket [URL02] and in CloudFront. [URL03]
