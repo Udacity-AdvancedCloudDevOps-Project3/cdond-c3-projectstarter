@@ -27,6 +27,7 @@ circleci SSH key
 kvdb.io
 
 We created prometheus ubuntu instance by manually creating a CloudFormation stack with name "udapeople-prometheus" from the file in the project path  ~/cloudformation-templates-zakarya/create-prometheus-instance.yml
+Also manuall yinstalling node-exporter in the prometheus instance 
 
 
 
