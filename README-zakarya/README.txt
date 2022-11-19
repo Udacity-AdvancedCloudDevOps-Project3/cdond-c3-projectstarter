@@ -365,6 +365,7 @@ Evidence that Prometheus and AlertManager send alerts when certain conditions ex
     ~/README-zakarya/SCREENSHOT12_alertmanager.png
     ~/README-zakarya/SCREENSHOT12_prometheus-alerts.png
     ~/README-zakarya/SCREENSHOT12_email-notification.png
+    ~/README-zakarya/SCREENSHOT12_prometheus-targets.png
 
 
 
