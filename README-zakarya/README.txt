@@ -99,6 +99,7 @@ Section 2: Deploying Working, Trustworthy Software
 A.
 Utilize Deployment Strategies to design and build CI/CD pipelines that support Continuous Delivery processes.
 
+
 A.1.
 A public git repository with your project code. [URL01]
 
@@ -108,15 +109,12 @@ A public git repository with your project code. [URL01]
     https://github.com/Udacity-AdvancedCloudDevOps-Project3/cdond-c3-projectstarter.git
 
 
-
-
 A.2.
 Evidence of code-based CI/CD configuration in the form of yaml files in your git repository.
 
     Circleci CI/CD pipeline configuration file path in the repository home:
 
     ~/.circleci/config.yml
-
 
 
 A.3.
@@ -165,11 +163,6 @@ An alert from one of your failed builds. [SCREENSHOT04]
     ~/README-zakarya/SCREENSHOT04.e.png
 
 
-
-
-
-
-
 A.4
 Evidence in your code that:
 
@@ -214,24 +207,21 @@ Unit tests have been fixed.
     "
 
 
-????????????????????????????????????????????
-Chck code lines before submitting the project
-????????????????????????????????????????????
 A.4.c
 All critical security vulnerabilities caught by the “Analyze” job have been fixed.
 
    To fix frontend Analyze audit security test
     I added comments in the code of the file in path of the repository home:
     ~/.circleci/config.yml
-    Lines 157 & 161
+    Lines 203 & 207
     "
     ...
     ### to fix frontend Analyze audit security test We add next line
-    sudo npm install npm@latest -g
-    npm audit fix --audit-level=critical --force
-    # npm audit fix --audit-level=critical --force
-    # npm audit fix --force
-    npm audit --audit-level=critical
+            npm install
+            npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
+            # npm audit fix --force
+            npm audit --audit-level=critical
     ...
     "
 
@@ -239,16 +229,16 @@ All critical security vulnerabilities caught by the “Analyze” job have been 
     To fix backend Analyze audit security test
     I added comments in the code of the file in path of the repository home:
     ~/.circleci/config.yml
-    Lines 184 & 189
+    Lines 230 & 235
     "
     ...
     ### to fix backend nalyze audit security test We add next line
-    npm install
-    npm audit fix --audit-level=critical --force
-    npm audit fix --audit-level=critical --force
-    # npm audit fix --audit-level=critical --force
-    # npm audit fix --force
-    npm audit --audit-level=critical
+            npm install
+            npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
+            # npm audit fix --audit-level=critical --force
+            # npm audit fix --force
+            npm audit --audit-level=critical
     ...
     "
 
@@ -325,7 +315,7 @@ Evidence of deployed and functioning front-end application in an S3 bucket [URL0
     
     URL03
     https://d15pa9xz9mb2pt.cloudfront.net/
-    
+
 B.8
 Evidence of healthy back-end application. [URL04]
 
