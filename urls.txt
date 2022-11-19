@@ -1,0 +1,32 @@
+
+Note:
+
+    For moer details about each screenshot, please review the directory/file in the repository path "~/README-zakarya/README.txt"
+
+
+
+
+A public git repository with your project code. [URL01]
+
+    URL01 is:
+    
+    https://github.com/Udacity-AdvancedCloudDevOps-Project3/cdond-c3-projectstarter.git
+
+
+
+
+
+B.7
+Evidence of deployed and functioning front-end application in an S3 bucket [URL02] and in CloudFront. [URL03]
+
+    URL02
+    https://udapeople-2dc0297.s3.amazonaws.com/index.html
+    
+    URL03
+    https://d15pa9xz9mb2pt.cloudfront.net/
+
+B.8
+Evidence of healthy back-end application. [URL04]
+
+    URL04
+    http://ec2-54-210-63-190.compute-1.amazonaws.com:3030/api/status
