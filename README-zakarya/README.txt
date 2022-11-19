@@ -301,8 +301,14 @@ Console output of a successful rollback after a failed smoke test. [SCREENSHOT07
 B.4
 Console output of successful promotion of new version to production in CloudFront. [SCREENSHOT08]
 
+    Screenshot path in the repository home:
+    ~/README-zakarya/SCREENSHOT08.png
+
 B.5
 Console output of successful cleanup job that removes old S3 bucket and EC2 instance. [SCREENSHOT09]
+
+    Screenshot path in the repository home:
+    ~/README-zakarya/SCREENSHOT09.png
 
 B.6
 Evidence that deploy jobs only happen on master branch. [SCREENSHOT10]
@@ -314,9 +320,17 @@ Evidence that deploy jobs only happen on master branch. [SCREENSHOT10]
 B.7
 Evidence of deployed and functioning front-end application in an S3 bucket [URL02] and in CloudFront. [URL03]
 
+    URL02
+    https://udapeople-2dc0297.s3.amazonaws.com/index.html
+    
+    URL03
+    https://d15pa9xz9mb2pt.cloudfront.net/
+    
 B.8
 Evidence of healthy back-end application. [URL04]
 
+    URL04
+    http://ec2-54-210-63-190.compute-1.amazonaws.com:3030/api/status
 
 
 
@@ -336,32 +350,28 @@ Surface critical server errors for diagnosis using centralized logging.
 A.1
 Evidence of Prometheus Server. [URL05]
 
+    http://ec2-3-239-189-17.compute-1.amazonaws.com:9090/
+
 A.2
 Evidence that Prometheus is monitoring memory, cpu and disk usage of EC2 instances. [SCREENSHOT11]
+
+    Screenshot path in the repository home:
+    ~/README-zakarya/SCREENSHOT11_CPU-Exp-usage.png
+    ~/README-zakarya/SCREENSHOT11_memory-available.png
+    ~/README-zakarya/SCREENSHOT11_disk-space-available.png
 
 A.3
 Evidence that Prometheus and AlertManager send alerts when certain conditions exist in the EC2 instance. [SCREENSHOT12]
 
+    Screenshot path in the repository home:
+    ~/README-zakarya/SCREENSHOT12_alertmanager.png
+    ~/README-zakarya/SCREENSHOT12_prometheus-alerts.png
+    ~/README-zakarya/SCREENSHOT12_email-notification.png
 
 
 
 
 
--------------------------------------------------------------------
-
-
-
-
-
-Suggestions to Make Your Project Stand Out!
-
-1. Add custom alert messages with more specific CI/CD pipeline failure reasons. The more specific the message, the faster the UdaPeople dev team can fix the issue.
-
-2. Use Circle CI locally to test your pipeline before pushing to git.
-
-3. Integrate other types of analysis or notification jobs.
-
-4. Write your own smoke tests to build more confidence before promoting the new build to production.
 
 
 
